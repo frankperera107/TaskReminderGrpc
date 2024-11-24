@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+option csharp_namespace = "TaskReminderGrpc";
+
+import "google/api/annotations.proto";
+
+package task_reminder_grpc;
+
+service TaskReminderGrpcService{
+
+//Create endpoints
+rpc CreateTaskReminder(CreateTaskReminderRequest) returns (CreateTaskReminderResponse) {
+    option (google.api.http) = {
+        post: "/v1/taskreminder",
+        body: "*"
+    };
+}
+
+//Read single endpoint
+rpc ReadTaskReminder(ReadTaskReminderRequest) returns (ReadTaskReminderResponse) {
+    option(google.api.http) = {
+        get: "/v1/taskreminder/{id}"
+    };
+}
+
+//Read list endpoint
+rpc ListAllTaskReminders(ListAllTaskRemindersRequest) returns (ListAllTaskRemindersResponse) {
+    option (google.api.http) ={
+        get: "/v1/taskreminder"
+    };
+}
+
+//Update endpoint
+rpc UpdateTaskReminder(UpdateTaskReminderRequest) returns (UpdateTaskReminderResponse) {
+    option (google.api.http) = {
+        put: "/v1/taskreminder",
+        body: "*"
+    };
+}
+
+//Delete endpoint
+rpc DeleteTaskReminder(DeleteTaskReminderRequest) returns (DeleteTaskReminderResponse) {
+    option(google.api.http) = {
+        delete: "/v1/taskreminder/{id}"
+    };
+}
+
+}
+
+message CreateTaskReminderRequest{
+    string title = 1;
+    string description = 2;
+}
+
+message CreateTaskReminderResponse {
+    int32 id = 1;
+}
+
+message ReadTaskReminderRequest {
+    int32 id = 1;
+}
+
+message ReadTaskReminderResponse {
+    int32 id = 1;
+    string title = 2;
+    string description = 3;
+    string status = 4;
+}
+
+message ListAllTaskRemindersRequest{}
+
+message ListAllTaskRemindersResponse {
+    repeated ReadTaskReminderResponse all_tasks = 1;
+}
+
+message UpdateTaskReminderRequest {
+    int32 id = 1;
+    string title = 2;
+    string description = 3;
+    string status = 4;
+}
+
+message UpdateTaskReminderResponse {
+    int32 id =1;
+}
+
+message DeleteTaskReminderRequest {
+    int32 id = 1;
+}
+
+message DeleteTaskReminderResponse {
+    int32 id = 1;
+}
